@@ -1,6 +1,12 @@
 # Mac
 .DS_Store
 
+
+access_token.pickle
+*.pickle
+secrets-chaya.txt
+strava-secrets.txt
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -21,6 +27,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+.idea/
 
 # Spyder project settings
 .spyderproject
