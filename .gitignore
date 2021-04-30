@@ -46,3 +46,4 @@ venv.bak/
 .nbgrader.log
 example.egg-info/
 __pycache__
+*.pyc
