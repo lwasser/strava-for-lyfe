@@ -1,0 +1,31 @@
+name: strava-lyfe
+channels:
+  - conda-forge
+dependencies:
+  # To make conda happy for stravalib install below
+  - pip
+  # Core scientific python
+  # - numpy
+  # - matplotlib
+  # seaborn installs mpl, numpy and pandas as deps
+  - seaborn
+  - plotly
+  - folium
+
+  # Geo stuff
+  - geopandas
+  # notebook installs with lab
+  - jupyterlab
+  - jupyter-dash
+  # Plotly support
+  - ipywidgets
+
+  - jupyter_contrib_nbextensions
+  # Syntax format
+  - jupyterlab_code_formatter
+  - black
+  - autopep8
+
+  - pip:
+      # strava api
+      - stravalib
