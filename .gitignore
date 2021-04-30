@@ -42,3 +42,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.nbgrader.log
+example.egg-info/
+__pycache__
