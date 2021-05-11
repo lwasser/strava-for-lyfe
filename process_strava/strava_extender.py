@@ -17,7 +17,6 @@ class StravaClean:
         # Convert to hours and consider activities that are >24 hours
         self._obj["elapsed_hours"] = ((self._obj.elapsed_time.dt.seconds/60)/60)+(self._obj.elapsed_time.dt.days*24)
         
-    # Move to the strava_clean module?
     def convert_units_df(self):
         """Convert dataframe units to ft and miles
 
@@ -58,4 +57,69 @@ class StravaClean:
         new_df["year"] = new_df.index.year
 
         return new_df
+    
+    def summarize_monthly(self, date=None):
+        """Create summary df with monthly totals.
+
+        Parameters
+        ----------
+        df : Pandas dataframe
+            DataFrame containing daily summarized strava activities and a date index.
+        date : string
+            Starting date to clip data 
+
+        Returns
+        -------
+        df : Pandas DataFrame
+            DF containing daily summarized data and a doy and year column
+
+        Also saves an daily_sum_all_activities to the data/ directory.
+
+        """   
+        
+        new_df = self._obj.copy()
+        monthly_df = new_df.resample('M').sum()
+        # Double check as i may not need these columns
+        monthly_df['month'] = monthly_df.index.month
+        monthly_df['year'] = monthly_df.index.year
+        monthly_df['doy'] = monthly_df.index.dayofyear
+        if date is not None:
+            monthly_df = monthly_df[date:]
+            
+        return monthly_df
+    
+    
+    def calc_month_sum_by_year(self, col_name):
+        """Create summary df with monthly totals.
+
+        Parameters
+        ----------
+        df : Pandas dataframe
+            DataFrame containing monthly summarized strava activities and a date index.
+        col_name : string
+            Column to summarize 
+
+        Returns
+        -------
+        df : Pandas DataFrame
+            DF containing daily summarized data and a doy and year column
+
+        Also saves an daily_sum_all_activities to the data/ directory.
+
+        """      
+    
+
+        df = self._obj.copy()
+        df = df[[col_name]]
+
+        df["year"] = df.index.year
+        df["month"] = df.index.month
+        # Set index
+        df.set_index('month','year', inplace=True)
+        df.set_index('year', append=True, inplace=True)
+        df = df.unstack()
+        df.columns = df.columns.droplevel(0)
+
+        # Revese column order when returned
+        return df.iloc[:, ::-1]    
       
