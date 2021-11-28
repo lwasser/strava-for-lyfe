@@ -1,7 +1,8 @@
-name: strava-lyfe
+name: strava
 channels:
   - conda-forge
 dependencies:
+  - python=3.8
   # To make conda happy for stravalib install below
   - pip
   # Core scientific python

@@ -47,3 +47,8 @@ venv.bak/
 example.egg-info/
 __pycache__
 *.pyc
+MyFitbitData/
+fitbit*
+test*
+resources/*
+scripts/*

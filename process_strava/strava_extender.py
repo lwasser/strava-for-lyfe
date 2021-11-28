@@ -13,9 +13,13 @@ class StravaClean:
             raise AttributeError("Must have activity id.")
             
     def add_elapsed_time(self):
-        self._obj.elapsed_time=pd.to_timedelta(self._obj.elapsed_time)
+        #self._obj.elapsed_time=pd.to_timedelta(self._obj.elapsed_time)
         # Convert to hours and consider activities that are >24 hours
-        self._obj["elapsed_hours"] = ((self._obj.elapsed_time.dt.seconds/60)/60)+(self._obj.elapsed_time.dt.days*24)
+        # self._obj["elapsed_hours"] = ((self._obj.elapsed_time.dt.seconds/60)/60)+(self._obj.elapsed_time.dt.days*24)
+        #self._obj["elapsed_hours"] = ((self._obj.elapsed_time.dt.seconds/60)/60)+(self._obj.elapsed_time.dt.days*24)
+        # Return type has changed 
+        self._obj["elapsed_hours"] = ((self._obj.elapsed_time/60)/60)
+        
         
     def convert_units_df(self):
         """Convert dataframe units to ft and miles
