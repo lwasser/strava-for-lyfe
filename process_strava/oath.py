@@ -33,15 +33,14 @@ def get_code(client, client_id):
 
     # Generate the URL
     print(
-        "Authenticating with Strava. Be sure you are logged into Strava before "
-        "running this!"
+        "Authenticating with Strava. Be sure you are logged into Strava before"
+        " running this!"
     )
     print(
         "I am launching a web browser. Please return the code following code= "
         "in the resulting url."
     )
 
-    # NOTE - this allows access to a lot of profile info AND private activities. we could scope this back to read all easily
     url = client.authorization_url(
         client_id=client_id,
         redirect_uri="http://127.0.0.1:5000/authorization",
@@ -51,14 +50,15 @@ def get_code(client, client_id):
     print(
         """You will see a url that looks like this. """,
         """http://127.0.0.1:5000/authorization?state=&code=45fe4353d6f8d04fd6033a00923dd04972760550&scope=read,activity:read_all,profile:read_all,read_all")""",
-        """copy the code after code= in the url. do not include the & in this """,
+        """copy the code after code= in the url. Do not include the & """,
     )
 
     code = input("Please enter the code that you received: ")
     print(
         "Great! Your code is ",
         code,
-        "Next I will exchange that code for a token.\n" "I only have to do this once.",
+        "Next I will exchange that code for a token.\n"
+        "I only have to do this once.",
     )
     return code
 
@@ -91,10 +91,12 @@ def authenticate(secrets, client, verbose=True):
 
     """
 
-    client_id, client_secret = open("strava-secrets.txt").read().strip().split(",")
+    client_id, client_secret = (
+        open("strava-secrets.txt").read().strip().split(",")
+    )
 
     client = Client(rate_limiter=limiter.DefaultRateLimiter())
-    # ****This only needs to happen once. Once we have the token we can simply refresh ****
+    # This only needs to happen once. Once we have the token we can refresh
 
     path_to_save = os.path.join("access_token.pickle")
 
@@ -117,7 +119,12 @@ def authenticate(secrets, client, verbose=True):
 
 
 def refresh_token(
-    client, client_id, client_secret, token_path_pickle=None, code=None, verbose=True
+    client,
+    client_id,
+    client_secret,
+    token_path_pickle=None,
+    code=None,
+    verbose=True,
 ):
 
     """A function that refreshes the users token once it has been
@@ -128,12 +135,16 @@ def refresh_token(
         with open(token_path_pickle, "rb") as f:
             access_token = pickle.load(f)
     except FileNotFoundError:
-        print("Oops - looks like you haven't created an access token yet. Aborting.")
+        print(
+            "Oops - looks like you haven't created an access token yet. "
+            "I can't help you yet. Aborting."
+        )
 
     if time.time() > access_token["expires_at"]:
         if verbose:
             print(
-                "Oops! Your token has expired. No worries - I will refresh it for you."
+                "Oops! Your token has expired. No worries - "
+                "I will refresh it for you."
             )
         refresh_response = client.refresh_access_token(
             client_id=client_id,
@@ -145,7 +156,8 @@ def refresh_token(
             pickle.dump(refresh_response, f)
         if verbose:
             print(
-                "I've refreshed your token and saved it to a file. Aren't I the best?"
+                "I've refreshed your token and saved it to a file. "
+                "Aren't I the best?"
             )
 
         client.access_token = refresh_response["access_token"]
