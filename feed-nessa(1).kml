@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+			<kml xmlns="http://www.opengis.net/kml/2.2">
+			  <Folder>
+				<name>KML Feed</name>
+				<visibility>1</visibility>
+				<open>1</open>
+				<description></description>
+				<NetworkLink>
+				  <name>KML Feed</name>
+				  <visibility>1</visibility>
+				  <open>1</open>
+				  <description></description>
+				  <refreshVisibility>1</refreshVisibility>
+				  <flyToView>0</flyToView>
+				  <Link>
+					<href>https://share.garmin.com/Feed/Share/nessa</href>
+					<refreshMode>onInterval</refreshMode>
+					<refreshInterval>60</refreshInterval>
+					<viewRefreshMode>onRequest</viewRefreshMode>
+					<viewRefreshTime>60</viewRefreshTime>
+				  </Link>
+				</NetworkLink>
+			  </Folder>
+			</kml>
