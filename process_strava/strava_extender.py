@@ -117,8 +117,9 @@ class StravaClean:
         df["year"] = df.index.year
         df["month"] = df.index.month
         # Set index
-        df.set_index("month", "year", inplace=True)
-        df.set_index("year", append=True, inplace=True)
+        df.set_index(keys=["month", "year"], inplace=True)
+        # Not sure why this is here because there is a multi index already from the line above
+        #df.set_index("year", append=True, inplace=True)
         df = df.unstack()
         df.columns = df.columns.droplevel(0)
 

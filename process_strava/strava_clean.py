@@ -42,7 +42,7 @@ def _calculate_elapsed(act_object):
     return days + hours
 
 
-def get_activities(client):
+def get_activities(client, after=None, before=None):
     """Grab all activities and turn into df
     TODO: add a limit or date span to this as an input
 
@@ -55,7 +55,7 @@ def get_activities(client):
         data from the Strava api.
     """
 
-    activities = client.get_activities()
+    activities = client.get_activities(after=after, before=before)
 
     # Generate a dataframe of all activities
     cols = [
@@ -87,7 +87,13 @@ def get_activities(client):
         "I've found {} activities.".format(len(all_data_df))
     )
 
-    csv_path = "all_activities.csv"
+    if after:
+        csv_path = "all_activities_after_" + after + ".csv"
+    elif before:
+        csv_path = "all_activities_before" + before + ".csv"
+    else:
+        csv_path = "all_activities.csv"
+        
     print(
         "Great! I have everything I need - I'm saving your data to a "
         "file called {}.".format(csv_path)
